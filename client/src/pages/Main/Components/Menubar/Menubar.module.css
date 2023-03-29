@@ -1,0 +1,26 @@
+.menubar_block {
+    width: 99%;
+    margin: auto;
+    background: rgb(45,45,45);
+    height: 46px;
+    margin-top:10px;
+    padding-bottom: 3px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menubar_block div {
+    margin: 0 auto;
+    cursor: pointer;
+    font-size: xx-large;
+    color: rgb(52, 179, 241);
+}
+
+.menubar_block div a {
+    text-decoration: none;
+    font-size: x-large;
+    font-weight: 550;
+    color: rgb(52, 179, 241);
+}

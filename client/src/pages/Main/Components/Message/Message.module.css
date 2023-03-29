@@ -1,0 +1,23 @@
+.message_block {
+    display: flex;
+}
+
+.message_block div {
+    backdrop-filter: blur(70%);
+    background: rgb(70, 67, 70);
+    width: fit-content;
+    border-radius: 10px;
+    padding: 2px;
+    margin-top: 20px;
+    font-size: x-large;
+}
+
+.from {
+    margin-left: 20px;
+    margin-right: auto;
+}
+
+.to {
+    margin-left: auto;
+    margin-right: 20px;
+}

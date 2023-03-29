@@ -1,0 +1,11 @@
+.chats_block {
+    width:25%;
+    display: block;
+    margin-left: 10px;
+    min-height: 850px;
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 10px;
+    background: rgb(45,45,45);
+    color: rgb(52, 179, 241);
+}

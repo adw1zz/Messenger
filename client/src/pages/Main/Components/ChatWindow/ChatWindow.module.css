@@ -1,0 +1,10 @@
+.chat_window_block {
+    background: rgb(45,45,45);
+    width: 75%;
+    min-height: 850px;
+    border-radius: 10px;
+    padding: 5px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
