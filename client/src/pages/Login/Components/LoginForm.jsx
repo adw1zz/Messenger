@@ -6,7 +6,7 @@ import { AuthorizationContext } from "../../../context/context";
 
 const LoginForm = () =>{
     const [formValue, setFormValue] = useState({email: '', password: ''});
-    const redir = useContext(AuthorizationContext);
+    const redir = useContext(AuthorizationContext).nav;
     const handleInput = (e) => {
         const {name, value} = e.target;
         setFormValue({...formValue, [name]: value});
@@ -15,7 +15,7 @@ const LoginForm = () =>{
         e.preventDefault();
         const response = await AuthService.login({...formValue});
         if (response.status === 200) {
-           redir('/')
+            redir('/')
         }
     }
 

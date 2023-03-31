@@ -1,10 +1,12 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import { Link } from "react-router-dom";
 import cl from './RegistrationsForm.module.css';
 import AuthService from "../../../services/auth-service";
+import { AuthorizationContext } from "../../../context/context";
 
 const RegistrationForm = () => {
     const [formValue, setFormValue] = useState({email: '', nickname: '', password: '', repeatPassword: ''});
+    const redir = useContext(AuthorizationContext).nav;
     const handleInput = (e) => {
         const {name, value} = e.target;
         setFormValue({...formValue, [name]: value});
@@ -14,7 +16,10 @@ const RegistrationForm = () => {
         if (formValue.password !== formValue.repeatPassword) {
             setFormValue({...formValue, password: '', repeatPassword: ''})
         } else {
-            AuthService.registration({...formValue})
+           const response = AuthService.registration({...formValue});
+           if (response.status === 200) {
+            redir('/login')
+           }
         }
     }
 

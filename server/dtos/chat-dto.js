@@ -1,12 +1,12 @@
 module.exports = class ChatDto {
     id;
     users;
-    name;
+    chatname;
     messages;
 
     constructor(model) {
         this.id = model.id;
-        this.name = model.name;
+        this.chatname = model.chatname;
         this.users = model.users;
         this.messages = model.messages;
     }

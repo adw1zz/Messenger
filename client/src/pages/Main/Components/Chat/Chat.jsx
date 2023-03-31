@@ -1,14 +1,14 @@
 import React from "react";
 import cl from './Chat.module.css';
 
-const Chat = () =>{
+const Chat = ({nickname}) =>{
     return (
         <div className={cl.chat_block}>
             <div>
                 icon
             </div>
             <div>
-                nickname
+                {nickname}
             </div>
         </div>
     )

@@ -5,6 +5,7 @@ const mailService = require('../service/mail-service');
 const tokenService = require('../service/token-service');
 const UserDto = require('../dtos/user-dto');
 const ApiError = require('../exceptions/api-error');
+const chatModel = require('../models/chat-model');
 
 class UserService {
     async registration(email,nickname,password) {
@@ -76,14 +77,15 @@ class UserService {
         return {...tokens, user: userDto}
     }
 
-    async serachUser(userTag) {
-        return userTag;
+    async searchUser(userTag) {
+        const user = await userModel.findOne({userTag});
+        if (!user) {
+            throw ApiError.BadRequest(`User with userTag <${userTag}> not found`);
+        }
+        const userDto = new UserDto(user);
+        return {foundUser: userDto.nickname}
     }
 
-    async getAllusers() {
-        const users = await userModel.find();
-        return users;
-    }
 }
 
 module.exports = new UserService();

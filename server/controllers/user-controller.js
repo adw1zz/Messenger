@@ -62,22 +62,14 @@ class UserController {
 
     async searchUser(req, res, next) {
         try {
-            const {userTag} = req.body; 
-            const users = await userService.serachUser(userTag);
-            return res.json(users);
-        } catch (e) {
-
-        }
-    }
-
-    async getUsers(req, res, next) {
-        try {
-            const users = await userService.getAllusers();
-            return res.json(users);
+            const userTag = req.query.userTag;
+            const userData = await userService.searchUser(userTag);
+            return res.json(userData); 
         } catch (e) {
             next(e);
         }
     }
+
 }
 
 module.exports = new UserController();

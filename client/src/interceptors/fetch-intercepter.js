@@ -1,4 +1,7 @@
 export default class FetchInterceptor {
+
+    static #API_URL = 'http://localhost:5000/api';
+
     static #getToken() {
         return localStorage.getItem('accessToken');
     }
@@ -8,7 +11,12 @@ export default class FetchInterceptor {
     }
     
     static async #refreshToken() {
-        const response = await this.request('/refresh');
+        const options = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+        }
+        const response = await this.request(`${this.#API_URL}/refresh`, options);
         response
             .json()
             .then(data => this.#saveToken(data.accessToken))
