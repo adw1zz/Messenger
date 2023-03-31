@@ -77,13 +77,15 @@ class UserService {
         return {...tokens, user: userDto}
     }
 
-    async searchUser(userTag) {
-        const user = await userModel.findOne({userTag});
-        if (!user) {
+    async searchUsers(userTag) {
+        const usersDocs = await userModel.find({userTag});
+        if (!usersDocs) {
             throw ApiError.BadRequest(`User with userTag <${userTag}> not found`);
         }
-        const userDto = new UserDto(user);
-        return {foundUser: userDto.nickname}
+        const users = usersDocs.map((user) => {
+            return new UserDto(user);
+        });
+        return {users: users}
     }
 
 }

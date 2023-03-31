@@ -4,7 +4,7 @@ import cl from './LoginForm.module.css';
 import AuthService from "../../../services/auth-service";
 import { AuthorizationContext } from "../../../context/context";
 
-const LoginForm = () =>{
+const LoginForm = ({setUserData}) =>{
     const [formValue, setFormValue] = useState({email: '', password: ''});
     const redir = useContext(AuthorizationContext).nav;
     const handleInput = (e) => {
@@ -13,8 +13,9 @@ const LoginForm = () =>{
     }
     const handleFormSubmit = async (e) =>{
         e.preventDefault();
-        const response = await AuthService.login({...formValue});
-        if (response.status === 200) {
+        const userData = await AuthService.login({...formValue});
+        if (userData) {
+            setUserData(userData);
             redir('/')
         }
     }

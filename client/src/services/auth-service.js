@@ -14,11 +14,9 @@ export default class AuthService {
                 body: JSON.stringify(userData)
             };
             const response = await fetch(`${this.#API_URL}/login`, options);
-            response
-                .json()
-                .then(data => localStorage.setItem('accessToken', data.accessToken))
-                .then(data => useContext(AuthorizationContext).user = data.user)
-            return response;
+            const body = await response.json();
+            localStorage.setItem('accessToken', body.accessToken)
+            return body.user;
         } catch (e) {
             console.log(e);
         }
@@ -56,17 +54,13 @@ export default class AuthService {
     }
 
     static async validateToken() {
-        try {
-            const options = {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
-            };
-            const response = await FetchInterceptor.request(`${this.#API_URL}/validate`, options);
-            return response;
-        } catch (e) {
-
-        } 
+        const options = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+        };
+        const response = await FetchInterceptor.request(`${this.#API_URL}/validate`, options);
+        return response;
     }
 
 }

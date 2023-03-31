@@ -1,12 +1,10 @@
 import React from "react";
 import cl from './SearchInput.module.css';
-import ApiService from '../../../../services/api-service';
 
-const SearchInput = ({ setIsSearchClicked, setFoundUsers}) => {
+const SearchInput = ({ setIsSearchClicked }) => {
 
     const changeHandle = async (e) => {
         const { value } = e.target;
-        console.log(value);
     }
 
     return (
@@ -15,7 +13,6 @@ const SearchInput = ({ setIsSearchClicked, setFoundUsers}) => {
                 e.target.addEventListener('keydown', (e) => {
                     if (e.key === 'Escape') {
                         setIsSearchClicked(false);
-                        setFoundUsers([]);
                     }
                 })
             }}></input>
