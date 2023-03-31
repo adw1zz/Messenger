@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { AuthorizationContext } from "../context/context";
+import FetchInterceptor from "../interceptors/fetch-intercepter";
 
 export default class AuthService {
     static #API_URL = 'http://localhost:5000/api'
@@ -52,6 +53,20 @@ export default class AuthService {
         } catch (e) {
             console.log(e);
         }
+    }
+
+    static async validateToken() {
+        try {
+            const options = {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+            };
+            const response = await FetchInterceptor.request(`${this.#API_URL}/validate`, options);
+            return response;
+        } catch (e) {
+
+        } 
     }
 
 }

@@ -15,5 +15,6 @@ router.post('/logout', userController.logout);
 router.get('/activate/:link', userController.activate);
 router.get('/refresh', userController.refresh);
 router.get('/searchuser', authMiddleware, userController.searchUser);
+router.get('/validate', authMiddleware);
 
 module.exports = router;

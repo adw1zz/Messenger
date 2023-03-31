@@ -5,12 +5,14 @@ import { useContext, useState } from 'react';
 
 const Chats = () => {
     const [chats, setChats] = useState([]);
-    const foundUser = useContext(SessionContext).foundUser;
+    const foundUsers = useContext(SessionContext).foundUsers;
     
     return (
         <div className={cl.chats_block}>
-           {foundUser
-                ? <Chat nickname={foundUser}/>
+           {foundUsers
+                ? foundUsers.map((user) => {
+                    return <Chat nickname={user.nickname}/>
+                })
                 : chats.map((chat) => {
                     return '';
                 })

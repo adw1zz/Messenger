@@ -2,23 +2,23 @@ import React from "react";
 import cl from './SearchInput.module.css';
 import ApiService from '../../../../services/api-service';
 
-function handler(setIsSearchClicked, setFoundUser) {
-    const inp = document.getElementById('search_input');
-    inp.addEventListener('keydown', async (e) => {
-        if (e.key === 'Enter') {
-            const response = await ApiService.searchUser(inp.value);
-            setFoundUser(response.foundUser);
-        } else if (e.key === 'Escape') {
-            setIsSearchClicked(false);
-            setFoundUser('');
-        }
-    })
-}
+const SearchInput = ({ setIsSearchClicked, setFoundUsers}) => {
 
-const SearchInput = ({setIsSearchClicked, setFoundUser}) => {
+    const changeHandle = async (e) => {
+        const { value } = e.target;
+        console.log(value);
+    }
+
     return (
         <div className={cl.search_input_block}>
-            <input id="search_input" onClick={() => handler(setIsSearchClicked, setFoundUser)}></input>
+            <input id="search_input" onChange={changeHandle} onClick={(e) => {
+                e.target.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        setIsSearchClicked(false);
+                        setFoundUsers([]);
+                    }
+                })
+            }}></input>
         </div>
     )
 }

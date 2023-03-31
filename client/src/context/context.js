@@ -6,6 +6,6 @@ export const AuthorizationContext = createContext({
 });
 
 export const SessionContext = createContext({
-    setFoundUser: null,
-    foundUser: ""
+    setFoundUsers: null,
+    foundUsers: []
 })

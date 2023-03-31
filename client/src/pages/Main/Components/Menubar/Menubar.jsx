@@ -9,12 +9,12 @@ import { SessionContext } from "../../../../context/context";
 
 const Menubar = () => {
     const [isSearchClicked, setIsSearchClicked] = useState(false);
-    const setFoundUser = useContext(SessionContext).setFoundUser;
+    const setFoundUsers = useContext(SessionContext).setFoundUsers;
     return (
         <div className={cl.menubar_block}>
             <div>
                 {isSearchClicked
-                    ? <SearchInput setIsSearchClicked={setIsSearchClicked} setFoundUser={setFoundUser} />
+                    ? <SearchInput setIsSearchClicked={setIsSearchClicked} setFoundUsers={setFoundUsers} />
                     : <i className="gg-search" onClick={() => setIsSearchClicked(true)}></i>
                 }
             </div>
