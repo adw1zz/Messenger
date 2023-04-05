@@ -1,21 +1,22 @@
 import React from "react";
 import cl from './SearchInput.module.css';
 
-const SearchInput = ({ setIsSearchClicked }) => {
+const SearchInput = ({ setIsSearchClicked, setUsersToSearch }) => {
 
-    const changeHandle = async (e) => {
-        const { value } = e.target;
+    const onClickHandle = (e) => {
+        const inp = e.target;
+        inp.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                setIsSearchClicked(false);
+            } else if (e.key === 'Enter') {
+                setUsersToSearch(inp.value);
+            }
+        })
     }
 
     return (
         <div className={cl.search_input_block}>
-            <input id="search_input" onChange={changeHandle} onClick={(e) => {
-                e.target.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape') {
-                        setIsSearchClicked(false);
-                    }
-                })
-            }}></input>
+            <input id="search_input" onClick={onClickHandle}></input>
         </div>
     )
 }

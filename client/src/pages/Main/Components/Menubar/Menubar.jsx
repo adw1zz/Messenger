@@ -6,14 +6,14 @@ import '../../../icons/search/search.css';
 import SearchInput from "../Search/SearchInput";
 import AuthService from "../../../../services/auth-service";
 
-const Menubar = () => {
+const Menubar = ({setUsersToSearch}) => {
     const [isSearchClicked, setIsSearchClicked] = useState(false);
 
     return (
         <div className={cl.menubar_block}>
             <div>
                 {isSearchClicked
-                    ? <SearchInput setIsSearchClicked={setIsSearchClicked}/>
+                    ? <SearchInput setIsSearchClicked={setIsSearchClicked} setUsersToSearch={setUsersToSearch}/>
                     : <i className="gg-search" onClick={() => setIsSearchClicked(true)}></i>
                 }
             </div>

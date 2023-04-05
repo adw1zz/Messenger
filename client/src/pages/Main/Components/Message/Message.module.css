@@ -6,18 +6,21 @@
     backdrop-filter: blur(70%);
     background: rgb(70, 67, 70);
     width: fit-content;
+    max-width: 40%;
     border-radius: 10px;
     padding: 2px;
-    margin-top: 20px;
+    margin-bottom: 20px;
     font-size: x-large;
+    justify-content: center;
+    color:rgb(52, 179, 241);
 }
 
 .from {
-    margin-left: 20px;
+    margin-left: 200px;
     margin-right: auto;
 }
 
 .to {
     margin-left: auto;
-    margin-right: 20px;
+    margin-right: 200px;
 }

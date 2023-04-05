@@ -70,6 +70,16 @@ class UserController {
         }
     }
 
+    async validate(req, res, next) {
+        try{
+            const {refreshToken} = req.cookies;
+            const userData = await userService.validate(refreshToken);
+            return res.json(userData);
+        } catch (e) {
+            next(e);
+        }
+    }
+
 }
 
 module.exports = new UserController();

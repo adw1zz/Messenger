@@ -3,11 +3,13 @@ const express = require('express');
 const cors = require('cors');
 const cookieparser = require('cookie-parser');
 const mongoose = require('mongoose');
-const router = require('./router/index');
+const app = express();
+module.exports = require('express-ws')(app);
+const router = require('./routers/http-router');
+const wsRouter = require('./routers/ws-router');
 const errorMiddleware = require('./middlewares/error-middleware');
 
 const PORT = process.env.PORT;
-const app = express();
 
 app.use(cors({
     origin: process.env.CLIENT_URL,
@@ -16,6 +18,7 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieparser());
 app.use('/api', router);
+app.use('/api', wsRouter);
 app.use(errorMiddleware);
 
 const start = async () => {

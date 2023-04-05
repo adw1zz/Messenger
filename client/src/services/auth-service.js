@@ -1,5 +1,3 @@
-import { useContext } from "react";
-import { AuthorizationContext } from "../context/context";
 import FetchInterceptor from "../interceptors/fetch-intercepter";
 
 export default class AuthService {
@@ -47,7 +45,6 @@ export default class AuthService {
             if (response.status === 200) {
                 localStorage.removeItem('accessToken');
             }
-            return response;
         } catch (e) {
             console.log(e);
         }
@@ -60,7 +57,12 @@ export default class AuthService {
             credentials: 'include',
         };
         const response = await FetchInterceptor.request(`${this.#API_URL}/validate`, options);
-        return response;
+        if (response.status !== 200) {
+            return false
+        } else {
+            const body = await response.json();
+            return body;
+        }
     }
 
 }

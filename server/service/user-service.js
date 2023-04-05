@@ -77,13 +77,30 @@ class UserService {
         return {...tokens, user: userDto}
     }
 
+    async validate(refreshToken) {
+        if (!refreshToken) {
+            throw ApiError.UnauthorizedError();
+        }
+        const userData = tokenService.validateRefreshToken(refreshToken);
+        const tokenFromDB = await tokenService.findToken(refreshToken);
+        if (!userData || !tokenFromDB) {
+            throw ApiError.UnauthorizedError();
+        }
+        const user  = await userModel.findById(userData.id);
+        const userDto = new UserDto(user);
+        return {user: userDto}
+    }
+
     async searchUsers(userTag) {
         const usersDocs = await userModel.find({userTag});
         if (!usersDocs) {
             throw ApiError.BadRequest(`User with userTag <${userTag}> not found`);
         }
         const users = usersDocs.map((user) => {
-            return new UserDto(user);
+            return {
+                id: user.id,
+                nickname: user.nickname,
+            }
         });
         return {users: users}
     }

@@ -18,12 +18,12 @@ export default class FetchInterceptor {
         }
         const response = await fetch(`${this.#API_URL}/refresh`, options);
         if (response.status === 200) {
-            response
-                .json()
-                .data(data => this.#saveToken(data.accessToken));
+            const body = await response.json();
+            this.#saveToken(body.accessToken);
             return true
+        } else {
+            return false
         }
-        return false;
     }
 
     static async request(url, options) {

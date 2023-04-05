@@ -1,9 +1,9 @@
 import React from "react";
 import LoginForm from './Components/LoginForm';
 
-const Login = ({setUserData}) => {
+const Login = () => {
     return (
-        <LoginForm setUserData={setUserData}/>
+        <LoginForm />
     )
 }
 

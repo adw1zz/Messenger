@@ -1,5 +1,9 @@
 .dialog_block {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
     height: 90%;
+    margin-bottom: 20px;
 }
 
