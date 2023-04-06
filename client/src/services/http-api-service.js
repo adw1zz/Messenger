@@ -10,10 +10,22 @@ export default class ApiService {
             credentials: 'include'
         }
         if (userTag) {
-            console.log(userTag);
             const response = await FetchInterceptor.request(`${this.#API_URL}/searchusers?userTag=${userTag}`, options);
             return response;
         }
 
+    }
+
+    static async getUserChats(userId) {
+        const options = {
+            method: 'GET', 
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include'
+        }
+        if (userId) {
+            const response = await FetchInterceptor.request(`${this.#API_URL}/chats?userId=${userId}`, options)
+            const body = await response.json();
+            return body;
+        }
     }
 }

@@ -1,20 +1,22 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import cl from './Menubar.module.css';
 import '../../../icons/options/options.css';
 import '../../../icons/search/search.css';
 import SearchInput from "../Search/SearchInput";
 import AuthService from "../../../../services/auth-service";
+import { SessionContext } from "../../../../context/context";
 
 const Menubar = ({setUsersToSearch}) => {
-    const [isSearchClicked, setIsSearchClicked] = useState(false);
+    const searchValue = useContext(SessionContext).isSearchClicked;
+    const searchSet = useContext(SessionContext).setIsSearchCliced;
 
     return (
         <div className={cl.menubar_block}>
             <div>
-                {isSearchClicked
-                    ? <SearchInput setIsSearchClicked={setIsSearchClicked} setUsersToSearch={setUsersToSearch}/>
-                    : <i className="gg-search" onClick={() => setIsSearchClicked(true)}></i>
+                {searchValue
+                    ? <SearchInput setIsSearchClicked={searchSet} setUsersToSearch={setUsersToSearch}/>
+                    : <i className="gg-search" onClick={() => searchSet(true)}></i>
                 }
             </div>
             <div>

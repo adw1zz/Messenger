@@ -3,12 +3,15 @@ import Chat from "../Chat/Chat";
 import { useContext, useEffect, useState } from 'react';
 import { useFetching } from '../../../../hooks/api-request';
 import ApiService from '../../../../services/http-api-service';
-import { AuthorizationContext } from '../../../../context/context';
+import { AuthorizationContext, SessionContext } from '../../../../context/context';
 import AuthService from '../../../../services/auth-service';
 
 const Chats = ({ usersToSearch }) => {
     const redir = useContext(AuthorizationContext).nav;
     const [foundUsers, setFoundUsers] = useState([]);
+    const [userChats, setUserChats ] = useState([]);
+    const currUser = useContext(AuthorizationContext).userData;
+    const searchValue = useContext(SessionContext).isSearchClicked;
 
     const [searchUsers, isSearching] = useFetching(async (toSearch) => {
         const response = await ApiService.searchUsers(toSearch);
@@ -21,20 +24,44 @@ const Chats = ({ usersToSearch }) => {
         }
     })
 
+    const [fetchChats, isFetching] = useFetching(async (userId) => {
+        const response = await ApiService.getUserChats(userId);
+        setUserChats(response);
+    })
+
     useEffect(() => {
         if (usersToSearch) {
             searchUsers(usersToSearch)
         }
     }, [usersToSearch])
 
+    useEffect(() => {
+        fetchChats(currUser.id);
+    },[])
+
     return (
-        <div className={cl.chats_block}>
-            {isSearching
-                ? 'Searching...'
-                : foundUsers.map((user) => {
-                    return <Chat user={user} key={user.id}/>
-                })}
-        </div>
+        <>
+            {searchValue
+                ? <div className={cl.chats_block}>
+                    {isSearching
+                        ? 'Searching...'
+                        : foundUsers.map((user) => {
+                            return <Chat user={user} key={user.id} />
+                        })}
+                </div>
+                : <div className={cl.chats_block}>
+                    {isFetching
+                        ? 'Loading...'
+                        :  userChats.map((chat) => {
+                            return <Chat user={chat.users[1]} key={chat.users[1]}/>
+                        })
+
+                    }
+                </div>
+            }
+
+        </>
+
     )
 }
 

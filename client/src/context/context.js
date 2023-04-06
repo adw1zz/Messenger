@@ -10,5 +10,7 @@ export const AuthorizationContext = createContext({
 
 export const SessionContext = createContext({
     messages: [{from: '', text: '', datetime: ''}],
-    setMessages: null
+    setMessages: null,
+    isSearchClicked: Boolean,
+    setIsSearchCliced: null
 })

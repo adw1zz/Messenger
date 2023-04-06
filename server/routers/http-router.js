@@ -1,4 +1,5 @@
 const Router = require('express').Router;
+const chatController = require('../controllers/chat-controller');
 const userController = require('../controllers/user-controller');
 const router = new Router();
 const {body} = new require('express-validator');
@@ -16,5 +17,6 @@ router.get('/activate/:link', userController.activate);
 router.get('/refresh', userController.refresh);
 router.get('/searchusers', authMiddleware, userController.searchUsers);
 router.get('/validate', authMiddleware, userController.validate);
+router.get('/chats', chatController.getChats);
 
 module.exports = router;
