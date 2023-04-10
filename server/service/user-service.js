@@ -8,8 +8,8 @@ const ApiError = require('../exceptions/api-error');
 const chatModel = require('../models/chat-model');
 
 class UserService {
-    async registration(email,nickname,password) {
-        const isMailExists = await userModel.findOne({email});
+    async registration(email, nickname, password) {
+        const isMailExists = await userModel.findOne({ email });
         if (isMailExists) {
             throw ApiError.BadRequest(`User with this email <${email}> already exists`);
         }
@@ -17,11 +17,11 @@ class UserService {
         const hashPassword = await bcrypt.hash(password, 5);
         const activationLink = uuid.v4();
 
-        const user = await userModel.create({email, nickname, userTag: `@${(+new Date).toString(16)}` , password: hashPassword, activationLink});
+        const user = await userModel.create({ email, nickname, userTag: `@${(+new Date).toString(16)}`, password: hashPassword, activationLink });
         await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
 
         const userDto = new UserDto(user);
-        const tokens = tokenService.generateTokens({...userDto});
+        const tokens = tokenService.generateTokens({ ...userDto });
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
         return {
@@ -31,7 +31,7 @@ class UserService {
     }
 
     async activate(activationLink) {
-        const user = await userModel.findOne({activationLink});
+        const user = await userModel.findOne({ activationLink });
         if (!user) {
             throw ApiError.BadRequest('Incorrect activation link');
         }
@@ -40,19 +40,19 @@ class UserService {
     }
 
     async login(email, password) {
-        const user = await userModel.findOne({email});
+        const user = await userModel.findOne({ email });
         if (!user) {
             throw ApiError.BadRequest(`User with email <${email}> not found`);
         }
         const isPassEquals = await bcrypt.compare(password, user.password);
-        if(!isPassEquals) {
+        if (!isPassEquals) {
             throw ApiError.BadRequest('Invalid password');
         }
         const userDto = new UserDto(user);
-        const tokens = tokenService.generateTokens({...userDto});
+        const tokens = tokenService.generateTokens({ ...userDto });
 
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
-        return {...tokens, user: userDto}
+        return { ...tokens, user: userDto }
     }
 
     async logout(refreshToken) {
@@ -69,30 +69,22 @@ class UserService {
         if (!userData || !tokenFromDB) {
             throw ApiError.UnauthorizedError();
         }
-        const user  = await userModel.findById(userData.id);
+        const user = await userModel.findById(userData.id);
         const userDto = new UserDto(user);
-        const tokens = tokenService.generateTokens({...userDto});
+        const tokens = tokenService.generateTokens({ ...userDto });
 
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
-        return {...tokens, user: userDto}
+        return { ...tokens, user: userDto }
     }
 
-    async validate(refreshToken) {
-        if (!refreshToken) {
-            throw ApiError.UnauthorizedError();
-        }
-        const userData = tokenService.validateRefreshToken(refreshToken);
-        const tokenFromDB = await tokenService.findToken(refreshToken);
-        if (!userData || !tokenFromDB) {
-            throw ApiError.UnauthorizedError();
-        }
-        const user  = await userModel.findById(userData.id);
+    async validate(userData) {
+        const user = await userModel.findById(userData.id);
         const userDto = new UserDto(user);
-        return {user: userDto}
+        return { user: userDto }
     }
 
     async searchUsers(userTag) {
-        const usersDocs = await userModel.find({userTag});
+        const usersDocs = await userModel.find({ userTag: userTag });
         if (!usersDocs) {
             throw ApiError.BadRequest(`User with userTag <${userTag}> not found`);
         }
@@ -102,7 +94,23 @@ class UserService {
                 nickname: user.nickname,
             }
         });
-        return {users: users}
+        return { users: users }
+    }
+
+    async getUsers(userIdArray) {
+        const users = await userModel.find({
+            '_id': {
+                $in: userIdArray
+            }
+        })
+        const foundUsers = users.map((user) => {
+            const userDto = new UserDto(user);
+            return {
+                id: userDto.id,
+                nickname: userDto.nickname
+            }
+        })
+        return foundUsers;
     }
 
 }

@@ -1,16 +1,11 @@
 export default class WSService {
 
-    static setSocket(url, usr, chat) {
+    static setSocket(url, currUserId, chat) {
         this.socket = new WebSocket(url);
         this.chatData = {
-            currUsr: {
-                id: usr.id,
-                nickname: usr.nickname
-            },
-            chatWith: {
-                id: chat.id,
-                nickname: chat.nickname
-            }
+            currUsr: currUserId,
+            chatId: chat.chatId,
+            chatWith: chat.id
         }
         this.socket.onopen = () => {
             this.socket.send(JSON.stringify({...this.chatData, method: 'connection'}));

@@ -72,8 +72,8 @@ class UserController {
 
     async validate(req, res, next) {
         try{
-            const {refreshToken} = req.cookies;
-            const userData = await userService.validate(refreshToken);
+            const userDataFromClient = req.user;
+            const userData = await userService.validate(userDataFromClient);
             return res.json(userData);
         } catch (e) {
             next(e);

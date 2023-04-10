@@ -3,33 +3,35 @@ import cl from './Chat.module.css';
 import { AuthorizationContext, SessionContext } from "../../../../context/context";
 import WSService from "../../../../services/ws-api-service";
 
-const Chat = ({ user }) => {
+const Chat = ({ chat }) => {
 
     const usr = useContext(AuthorizationContext).userData;
     const setMsgArray = useContext(SessionContext).setMessages;
     const msgArray = useContext(SessionContext).messages;
 
     const [resp, setResp] = useState({ from: '', text: '', datetime: '' });
+    const [initailMsgArray, setInitialMsgArray] = useState([]);
 
     useEffect(() => {
-        if (resp.from !== '') {
-            const newMsgArr = JSON.parse(JSON.stringify(msgArray));
-            if (newMsgArr[0].from === '') {
-                newMsgArr.shift();
-            }
-            newMsgArr.push(resp);
-            console.log(newMsgArr);
-            setMsgArray(newMsgArr);
+        const newMsgArr = JSON.parse(JSON.stringify(msgArray));
+        if (newMsgArr[0].from === '') {
+            newMsgArr.shift();
         }
+        newMsgArr.push(resp);
+        setMsgArray(newMsgArr);
     }, [resp])
 
     const chatingHandle = (e) => {
         const response = JSON.parse(e.data);
-        setResp(response);
+        if (Array.isArray(response)) {
+            setMsgArray(response)
+        } else {
+            setResp(response);
+        }
     }
 
     const onClickHandle = () => {
-        WSService.setSocket('ws://localhost:5000/api/chat', usr, user);
+        WSService.setSocket('ws://localhost:5000/api/chat', usr.id, chat);
         WSService.socket.onmessage = chatingHandle;
     }
 
@@ -39,7 +41,7 @@ const Chat = ({ user }) => {
                 icon
             </div>
             <div>
-                {user.nickname}
+                {chat.nickname}
             </div>
         </div>
     )

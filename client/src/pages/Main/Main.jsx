@@ -18,7 +18,6 @@ const Main = () => {
     const [validate, isValidating] = useFetching(async () => {
         const response = await AuthService.validateToken();
         if (!response) {
-            await AuthService.logout();
             redir('/login')
         } else {
             setUsr(response.user);

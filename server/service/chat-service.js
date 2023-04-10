@@ -1,7 +1,7 @@
 const chatModel = require('../models/chat-model');
-const messageModel = require('../models/msg-model');
-const ChatDto = require('../dtos/chat-dto');
 const messageService = require('./message-service');
+const userService = require('./user-service');
+const ChatDto = require('../dtos/chat-dto');
 const aWss = require('../index').getWss();
 
 class ChatService {
@@ -9,18 +9,16 @@ class ChatService {
     currSessionMessages = [];
 
     async getChat(ws, msg) {
-        ws.id = msg.currUsr.id;
-        let chat = await chatModel.findOne({
-            users: {
-                $in: [
-                    msg.currUsr.id,
-                ]
-            }
-        });
+        ws.id = msg.currUsr;
+        let chat = await chatModel.findById(msg.chatId);
         if (!chat) {
-            chat = await chatModel.create({ users: [msg.currUsr.id, msg.chatWith.id], messages: [] });
+            chat = await chatModel.create({ users: [msg.CurrUsr, msg.chatWith], chatname: '', messages: [] });
         }
-        this.chatDto = new ChatDto(chat);
+        const chatDto = new ChatDto(chat);
+        this.chatDto = chatDto;
+        this.currSessionMessages = [];
+        const messages = await messageService.getChatMessages(this.chatDto.messages);
+        ws.send(JSON.stringify(messages));
     }
 
     broadcasting(message) {
@@ -39,10 +37,12 @@ class ChatService {
                 clientsCount++;
             }
         })
-        if (clientsCount === 1) {
+        if (clientsCount === 0) {
             const createdMsgArray = await messageService.saveMessages(this.currSessionMessages);
             const newArray = this.chatDto.messages.concat(createdMsgArray);
-            await chatModel.findByIdAndUpdate({ id: this.chatDto.id }, { $set: { messages: newArray } });
+            await chatModel.findByIdAndUpdate(this.chatDto.id, { $set: { messages: newArray } });
+            this.currSessionMessages = [];
+            this.chatDto = {};
         }
     }
 
@@ -55,11 +55,29 @@ class ChatService {
                 ]
             }
         })
-        const newChatsArray = chats.map((chat) => {
-            return new ChatDto(chat);
+        const chatsUsers = chats.map((chat) => {
+            const chatDto = new ChatDto(chat);
+            return {
+                chatId: chatDto.id,
+                users: chatDto.users
+            }
         })
-        console.log(newChatsArray);
-        return newChatsArray;
+        const neededUsers = chatsUsers.map((chat) => {
+            if (chat.users[0] != userId) {
+                return chat.users[0];
+            } else {
+                return chat.users[1];
+            }
+        })
+        const foundChats = await userService.getUsers(neededUsers);
+        const result = [];
+        for (let i = 0; i < foundChats.length; i++) {
+            result.push({
+                ...foundChats[i],
+                chatId: chatsUsers[i].chatId,
+            })
+        }
+        return result;
     }
 
 }

@@ -3,13 +3,25 @@ const MsgDto = require('../dtos/msg-dto');
 
 class MessageService {
 
-    async saveMessages(messages) {
-        const createdMsgArray = [];
-        messages.forEach(async (message) => {
-            const msg = await messageModel.create({...message})
-            createdMsgArray.push(new MsgDto(msg).id);
+    async saveMessages(messages, chatId) {
+        const msgArray = [];
+        messages.forEach(message => {
+            const newMsg = messageModel.create({ ...message, chatId });
+            msgArray.push(new MsgDto(newMsg).id);
         });
-        return createdMsgArray;
+        return msgArray;
+    }
+
+    async getChatMessages(messagesIdArray) {
+        const msgArray = await messageModel.find({
+            id: {
+                $in: messagesIdArray
+            }
+        });
+        const msgDtosArray = msgArray.map((message) => {
+            return new MsgDto(message);
+        })
+        return msgDtosArray;
     }
 
 }

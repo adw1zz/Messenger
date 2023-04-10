@@ -1,9 +1,17 @@
 .dialog_block {
+    margin-top: 20px;
     display: flex;
+    overflow-y: auto;
     flex-direction: column;
-    justify-content: flex-end;
     flex-wrap: nowrap;
-    height: 90%;
+    justify-content: flex-end;
+    min-height: 85%;
+    max-height: 85%;
     margin-bottom: 20px;
 }
+
+.dialog_block::-webkit-scrollbar {
+    display: none;
+}
+
 

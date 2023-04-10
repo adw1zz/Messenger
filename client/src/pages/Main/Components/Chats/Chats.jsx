@@ -46,14 +46,16 @@ const Chats = ({ usersToSearch }) => {
                     {isSearching
                         ? 'Searching...'
                         : foundUsers.map((user) => {
-                            return <Chat user={user} key={user.id} />
+                            return <Chat chat={user} key={user.id} />
                         })}
                 </div>
                 : <div className={cl.chats_block}>
                     {isFetching
                         ? 'Loading...'
                         :  userChats.map((chat) => {
-                            return <Chat user={chat.users[1]} key={chat.users[1]}/>
+                            if (!chat.chatname) {
+                                return <Chat chat={chat} key={chat.id}/>
+                            }
                         })
 
                     }
