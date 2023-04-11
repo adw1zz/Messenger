@@ -3,14 +3,14 @@ import FetchInterceptor from "../interceptors/fetch-intercepter";
 export default class ApiService {
     static #API_URL = 'http://localhost:5000/api';
 
-    static async searchUsers(userTag) {
+    static async searchUser(userTag) {
         const options = {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include'
         }
         if (userTag) {
-            const response = await FetchInterceptor.request(`${this.#API_URL}/searchusers?userTag=${userTag}`, options);
+            const response = await FetchInterceptor.request(`${this.#API_URL}/searchuser?userTag=${userTag}`, options);
             return response;
         }
 
@@ -28,4 +28,5 @@ export default class ApiService {
             return body;
         }
     }
+
 }

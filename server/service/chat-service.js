@@ -12,7 +12,8 @@ class ChatService {
         ws.id = msg.currUsr;
         let chat = await chatModel.findById(msg.chatId);
         if (!chat) {
-            chat = await chatModel.create({ users: [msg.CurrUsr, msg.chatWith], chatname: '', messages: [] });
+            const usrs = [msg.currUsr, msg.chatWith];
+            chat = await chatModel.create({ users: usrs, chatname: '', messages: [] });
         }
         const chatDto = new ChatDto(chat);
         this.chatDto = chatDto;
@@ -40,7 +41,9 @@ class ChatService {
         if (clientsCount === 0) {
             const createdMsgArray = await messageService.saveMessages(this.currSessionMessages);
             const newArray = this.chatDto.messages.concat(createdMsgArray);
-            await chatModel.findByIdAndUpdate(this.chatDto.id, { $set: { messages: newArray } });
+            const chat = await chatModel.findById(this.chatDto.id);
+            chat.messages = newArray;
+            await chat.save();
             this.currSessionMessages = [];
             this.chatDto = {};
         }

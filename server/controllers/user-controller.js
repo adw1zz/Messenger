@@ -60,11 +60,11 @@ class UserController {
         }
     }
 
-    async searchUsers(req, res, next) {
+    async searchUser(req, res, next) {
         try {
             const userTag = req.query.userTag;
-            const foundUsers = await userService.searchUsers(userTag);
-            return res.json(foundUsers); 
+            const foundUser = await userService.searchUser(userTag);
+            return res.json(foundUser); 
         } catch (e) {
             next(e);
         }

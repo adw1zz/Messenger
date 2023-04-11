@@ -10,13 +10,9 @@ const Chat = ({ chat }) => {
     const msgArray = useContext(SessionContext).messages;
 
     const [resp, setResp] = useState({ from: '', text: '', datetime: '' });
-    const [initailMsgArray, setInitialMsgArray] = useState([]);
 
     useEffect(() => {
         const newMsgArr = JSON.parse(JSON.stringify(msgArray));
-        if (newMsgArr[0].from === '') {
-            newMsgArr.shift();
-        }
         newMsgArr.push(resp);
         setMsgArray(newMsgArr);
     }, [resp])
@@ -41,7 +37,7 @@ const Chat = ({ chat }) => {
                 icon
             </div>
             <div>
-                {chat.nickname}
+                {chat.nickname ? chat.nickname : chat.chatname} 
             </div>
         </div>
     )

@@ -8,6 +8,7 @@ const SearchInput = ({ setIsSearchClicked, setUsersToSearch }) => {
         inp.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 setIsSearchClicked(false);
+                inp.removeEventListener('keydown', this);
             } else if (e.key === 'Enter') {
                 setUsersToSearch(inp.value);
             }
