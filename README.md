@@ -1,6 +1,6 @@
 # Messenger
 
-Client-server application that provides the user with the basic functionality of any messenger.\
+Client-server application that provides the user basic functionality of any messenger.\
 Technology stack:\
 -> Front-end: React,\
 -> Back-end: Node.js (express), express-ws, express-formable, express-validator and other packages/modules.\
