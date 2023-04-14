@@ -80,6 +80,14 @@ class UserController {
         }
     }
 
+    async updateUserOptions(req, res, next) {
+        try {
+            console.log(req);
+        } catch (e) {
+            next(e);
+        }
+    }
+
 }
 
 module.exports = new UserController();
