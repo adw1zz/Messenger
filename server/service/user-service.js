@@ -5,7 +5,9 @@ const mailService = require('../service/mail-service');
 const tokenService = require('../service/token-service');
 const UserDto = require('../dtos/user-dto');
 const ApiError = require('../exceptions/api-error');
-const chatModel = require('../models/chat-model');
+const OptionsDto = require('../dtos/options-dto');
+const userOptionsModel = require('../models/user-options-model');
+const FileService = require('./file-service');
 
 class UserService {
     async registration(email, nickname, password) {
@@ -24,8 +26,13 @@ class UserService {
         const tokens = tokenService.generateTokens({ ...userDto });
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
+        await FileService.makeDirectory(userDto.id);
+        const options = await userOptionsModel.create({user: userDto.id});
+        const userOptions = new OptionsDto(options);
+
         return {
             ...tokens,
+            userOptions: userOptions,
             user: userDto
         }
     }

@@ -1,0 +1,28 @@
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal_content {
+    background-color: rgb(45, 45, 45);
+    width: 50px;
+    height: 300px;
+    border-radius: 10px;
+    justify-content: left;
+}
+
+.user_avatar {
+    margin-top: 1%;
+}
+
+.user_avatar img {
+    width: 100px;
+    height: 100px;
+}

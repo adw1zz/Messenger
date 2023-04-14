@@ -11,12 +11,12 @@ const RegistrationForm = () => {
         const {name, value} = e.target;
         setFormValue({...formValue, [name]: value});
     }
-    const handleFormSubmit = (e) =>{
+    const handleFormSubmit = async (e) =>{
         e.preventDefault();
         if (formValue.password !== formValue.repeatPassword) {
             setFormValue({...formValue, password: '', repeatPassword: ''})
         } else {
-           const response = AuthService.registration({...formValue});
+           const response = await AuthService.registration({...formValue});
            if (response.status === 200) {
             redir('/login')
            }
