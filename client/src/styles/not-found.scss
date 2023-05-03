@@ -1,0 +1,28 @@
+@import "./consts.scss";
+
+.not-found-block {
+    margin: 0 auto;
+    width: fit-content;
+    height: fit-content;
+    box-shadow: $def-box-shadow;
+    padding: 20px;
+    border-radius: 10px;
+    background: $def-block-background;
+}
+
+.not-found {
+    padding: 10%;
+    display: flex;
+}
+
+.not-found-block div {
+    color: $def-color;
+}
+
+.not-found-block div:nth-child(1) {
+    font-size: 700%;
+}
+
+.not-found-block div:nth-child(2) {
+    font-size: 400%;
+}

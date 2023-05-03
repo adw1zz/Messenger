@@ -1,10 +1,10 @@
 import React from "react";
-import cl from './NotFound.module.css';
+import "../../styles/not-found.scss";
 
 const NotFound = () => {
     return (
-        <div className={cl.not_found_block}>
-            <div className={cl.not_found_msg}>
+        <div className="not-found">
+            <div className="not-found-block">
                 <div>
                     404
                 </div>
