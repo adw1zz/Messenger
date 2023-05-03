@@ -1,9 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const formidableMiddleware = require('express-formidable');
 const cookieparser = require('cookie-parser');
 const mongoose = require('mongoose');
+const formidableMiddleware = require('express-formidable');
 const app = express();
 module.exports = require('express-ws')(app);
 const router = require('./routers/http-router');
@@ -18,7 +18,7 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(cookieparser());
-app.use('/api',formidableMiddleware());
+app.use('/api/updateuser', formidableMiddleware());
 app.use('/api', router);
 app.use('/api', wsRouter);
 app.use(errorMiddleware);

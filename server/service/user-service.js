@@ -4,10 +4,11 @@ const uuid = require('uuid');
 const mailService = require('../service/mail-service');
 const tokenService = require('../service/token-service');
 const UserDto = require('../dtos/user-dto');
+const FileDto = require("../dtos/file-dto");
 const ApiError = require('../exceptions/api-error');
 const OptionsDto = require('../dtos/options-dto');
 const userOptionsModel = require('../models/user-options-model');
-const FileService = require('./file-service');
+const fileService = require('./file-service');
 
 class UserService {
     async registration(email, nickname, password) {
@@ -26,15 +27,8 @@ class UserService {
         const tokens = tokenService.generateTokens({ ...userDto });
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
-        await FileService.makeDirectory(userDto.id);
-        const options = await userOptionsModel.create({user: userDto.id});
-        const userOptions = new OptionsDto(options);
-
-        return {
-            ...tokens,
-            userOptions: userOptions,
-            user: userDto
-        }
+        await fileService.makeDirectory(userDto.id);
+        await userOptionsModel.create({user: userDto.id});
     }
 
     async activate(activationLink) {
@@ -116,6 +110,15 @@ class UserService {
             }
         })
         return foundUsers;
+    }
+
+    async updateUserOptions(avatar, background, nickname, userId) {
+        const avatarDto = new FileDto(avatar, 'avatar');
+        const backgroundDto = new FileDto(background, 'background');
+        const savedFiles = await fileService.saveFiles([{...avatarDto}, {...backgroundDto}], userId);
+        const userOptions = await userOptionsModel.findOne({user: userId});
+        userOptions.save({avatar: savedFiles.avatar, background: savedFiles.background});
+        
     }
 
 }

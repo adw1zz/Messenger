@@ -1,0 +1,83 @@
+@import "./consts.scss";
+
+.registration {
+    padding: 10%;
+}
+
+.registration-form-block {
+    margin: 0 auto;
+    padding: 2%;
+    width: fit-content;
+    height: fit-content;
+    border-radius: $def-border-radius;
+    background: $def-block-background;
+    box-shadow: $def-box-shadow;
+}
+
+.registration-form div {
+    display: flex;
+    justify-content: center;
+}
+
+.registration-form div span {
+    font-size: large;
+    color: $def-color;
+}
+
+.registration-form div:not(:first-child){
+    margin-top: 20px;
+}
+
+.registration-form div:first-child {
+    font-size: $def-title-font-size;
+    color: $def-color;
+}
+
+.registration-form div:last-child a {
+    color: $def-unactive-color;
+}
+
+.registration-form div:last-child a:hover {
+    color: $def-color;
+}
+
+.registration-form div input {
+    border: 0;
+    color: $def-color;
+    border-radius: $def-border-radius;
+    background: $def-input-background;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: $def-font-size;
+    outline: none;
+}
+
+.registration-form div a {
+    text-decoration: none;
+    border-radius: $def-border-radius;
+    font-size: $def-font-size;
+    color: $def-color;
+    margin: 0 auto;
+}
+
+.registration-form div button {
+    cursor: pointer;
+    font-size: $def-font-size;
+    border: 0;
+    color: $def-color;
+    border-radius: $def-border-radius;
+    background: $def-input-background;
+    outline: none;
+    padding: 3px;
+}
+
+.registration-form div button:hover {
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.registration-form div button:active {
+    transform: translateY(3px);
+}

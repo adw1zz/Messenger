@@ -1,4 +1,4 @@
-import './styles/App.css';
+import './styles/app.scss';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import Registration from './pages/Registration/Registration';

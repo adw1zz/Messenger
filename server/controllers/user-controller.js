@@ -10,8 +10,8 @@ class UserController {
                 return next(ApiError.BadRequest('Validation error', errors.array()));
             }
             const {email, nickname, password} = req.body;
-            const userData = await userService.registration(email, nickname, password); 
-            return res.json(userData);
+            await userService.registration(email, nickname, password); 
+            return res.json({message: 'Success'});
         } catch (e) {
             next(e);
         }
@@ -82,7 +82,9 @@ class UserController {
 
     async updateUserOptions(req, res, next) {
         try {
-            console.log(req);
+            const {background, avatar} = req.files;
+            const {nickname} = req.fields;
+            const userId = req.user.id;
         } catch (e) {
             next(e);
         }

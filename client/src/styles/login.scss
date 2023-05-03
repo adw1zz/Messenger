@@ -1,0 +1,82 @@
+@import './consts.scss';
+
+.login {
+    padding: 10%;
+}
+
+.login-form-block {
+    margin: 0 auto;
+    padding: 2%;
+    width: fit-content;
+    height: fit-content;
+    border-radius: $def-border-radius;
+    background: $def-block-background;
+}
+
+.login-form div {
+    display: flex;
+    justify-content: center;
+}
+
+.login-form div span {
+    font-size: large;
+    color: $def-color;
+}
+
+.login-form div:not(:first-child){
+    margin-top: 20px;
+}
+
+.login-form div:first-child {
+    font-size: $def-title-font-size;
+    color: $def-color;
+}
+
+.login-form div:last-child a {
+    color: $def-unactive-color;
+}
+
+.login-form div:last-child a:hover {
+    color: $def-color;
+}
+
+.login-form div input {
+    border: 0;
+    background: $def-input-background;
+    color: $def-color;
+    border-radius: $def-border-radius;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: $def-font-size;
+    outline: none;
+}
+
+.login-form div a {
+    text-decoration: none;
+    border-radius: $def-border-radius;
+    font-size: $def-font-size;
+    color: $def-color;
+    margin: 0 auto;
+}
+
+.login-form div button {
+    cursor: pointer;
+    font-size: $def-font-size;
+    border: 0;
+    color: $def-color;
+    background: $def-input-background;
+    border-radius: $def-border-radius;
+    outline: none;
+    padding: 3px;
+}
+
+.login-form div button:hover {
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.login-form div button:active {
+    transform: translateY(3px);
+}

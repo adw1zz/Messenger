@@ -14,7 +14,6 @@ const Main = () => {
     const [isSearchClicked, setIsSearchClicked] = useState(false);
     const setUsr = useContext(AuthorizationContext).setUserData;
 
-
     const [validate, isValidating] = useFetching(async () => {
         const response = await AuthService.validateToken();
         if (!response) {
