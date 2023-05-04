@@ -1,0 +1,39 @@
+@import "./consts.scss";
+
+.chat {
+    width: 95%;
+    margin: 0 auto;
+    border-radius: $def-border-radius;
+    margin-top: 20px;
+    background: $def-input-background;
+    display: flex;
+    align-items: center;
+    padding: 1%;
+    padding-top: 5px;
+    cursor: pointer;
+}
+
+.chat:hover {
+    box-shadow: 0 0 5px 2px rgba(52, 179, 241, 0.5);
+    transform: translate3d(3px, -3px, 3px);
+    transition: 0.3s;
+}
+
+.chat div:nth-child(1) {
+    margin-left: 20px;
+}
+
+.chat div:nth-child(2) {
+    margin-left: 20px;
+    color: $def-color;
+    font-size: $def-font-size;
+}
+
+.chat div:nth-child(3) {
+    margin-left: 20px;
+}
+
+.chat div:nth-child(3):hover {
+    transform: translate3d(2px, -2px, 2px);
+    transition: 0.2s;
+}

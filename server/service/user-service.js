@@ -78,10 +78,12 @@ class UserService {
         return { ...tokens, user: userDto }
     }
 
-    async validate(userData) {
-        const user = await userModel.findById(userData.id);
+    async getUserData(userId) {
+        const user = await userModel.findById(userId);
         const userDto = new UserDto(user);
-        return { user: userDto }
+        return {
+            user: userDto
+        }
     }
 
     async searchUser(userTag) {

@@ -1,0 +1,48 @@
+@import "./consts.scss";
+
+.chat-window {
+    padding: 1%;
+    border-radius: $def-border-radius;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: $def-block-background;
+    margin-left: 20px;
+    width: 100%;
+    box-shadow: $def-box-shadow;
+}
+
+.chat-window-panel {
+    width: 99%;
+    margin: 0 auto;
+    border-radius: $def-border-radius;
+    background: $def-input-background;
+    height: 40px;
+}
+
+.chat-window-dialog {
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 90%;
+    height: 83%;
+}
+
+.chat-window-input {
+    margin-top: 20px;
+    width: 60%;
+    margin: 0 auto;
+}
+
+.chat-window-input input {
+    border: 0;
+    color: $def-color;
+    width: 100%;
+    border-radius: $def-border-radius;
+    background: $def-input-background;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: $def-font-size;
+    outline: none;
+}

@@ -70,10 +70,10 @@ class UserController {
         }
     }
 
-    async validate(req, res, next) {
+    async getUserData(req, res, next) {
         try{
-            const userDataFromClient = req.user;
-            const userData = await userService.validate(userDataFromClient);
+            const {id} = req.user;
+            const userData = await userService.getUserData(id);
             return res.json(userData);
         } catch (e) {
             next(e);

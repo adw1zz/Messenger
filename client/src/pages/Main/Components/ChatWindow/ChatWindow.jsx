@@ -1,15 +1,19 @@
 import React from "react";
-import cl from './ChatWindow.module.css';
-import TextInput from "../TextInput/TextInput";
-import Dialog from '../Dialog/Dialog';
+import "../../../../styles/chat-window.scss";
+import Dialog from "../Dialog/Dialog";
 
 const ChatWindow = () => {
 
     return (
-        <div className={cl.chat_window_block}>
-            <div className={cl.bg_img} style={{backgroundImage: 'none'}}>
-                <Dialog />
-                <TextInput />
+        <div className="chat-window">
+            <div className="chat-window-panel">
+
+            </div>
+            <div className="chat-window-dialog">
+                <Dialog/>
+            </div>
+            <div className="chat-window-input">
+                <input type="text" placeholder="Enter a message" />
             </div>
         </div>
 

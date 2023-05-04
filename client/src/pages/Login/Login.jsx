@@ -17,7 +17,7 @@ const Login = () => {
             setOnError(response);
         } else {
             setUser(response.user);
-            //redir('/');
+            redir('/');
         }
     }) 
 

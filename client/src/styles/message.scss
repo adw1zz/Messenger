@@ -1,0 +1,35 @@
+@import "./consts.scss";
+
+.message-block {
+    margin-top: 20px;
+    width: 50%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.message {
+    width: 100%;
+    padding: 1%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.message div:nth-child(2) {
+    padding: 1%;
+    width: fit-content;
+    font-size: $def-font-size;
+    background: $def-input-background;
+    border-radius: $def-border-radius;
+    margin-left: 20px;
+}
+
+.message div:nth-child(3) {
+    color: $def-color;
+    margin-left: 10px;
+}
+
+.message div:nth-child(2) span {
+    color: $def-color;
+}

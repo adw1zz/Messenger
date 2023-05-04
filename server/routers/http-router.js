@@ -7,7 +7,7 @@ const authMiddleware = require('../middlewares/auth-middleware');
 
 router.post('/registration',
     body('email').isEmail(),
-    body('nickname').isLength({min: 1, max: 16}),
+    body('nickname').isLength({min: 1, max: 8}),
     body('password').isLength({min: 8, max: 32}),
     userController.registration
 );
@@ -16,7 +16,7 @@ router.post('/logout', userController.logout);
 router.get('/activate/:link', userController.activate);
 router.get('/refresh', userController.refresh);
 router.get('/searchuser', authMiddleware, userController.searchUser);
-router.get('/validate', authMiddleware, userController.validate);
+router.get('/user', authMiddleware, userController.getUserData);
 router.get('/chats', chatController.getChats);
 router.put('/updateuser', authMiddleware, userController.updateUserOptions);
 

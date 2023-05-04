@@ -1,0 +1,86 @@
+@import "./consts.scss";
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-tag-input,
+.user-nickname-input {
+    margin-top: 20px;
+}
+
+.form div button {
+    cursor: pointer;
+    font-size: $def-font-size;
+    border: 0;
+    border-radius: $def-border-radius;
+    outline: none;
+    padding: 3px;
+}
+
+.form div input {
+    border: 0;
+    background: $def-input-background;
+    width: max-content;
+    border-radius: $def-border-radius;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: $def-font-size;
+    color: $def-color;
+    outline: none;
+}
+
+.user-profile-form-submit-button button,
+.user-profile-form-logout-button button {
+    background: $def-input-background;
+    color: $def-color;
+}
+
+.user-profile-form-avatar,
+.user-profile-form-background {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.user-profile-form-avatar div:nth-child(2),
+.user-profile-form-background div:nth-child(2) {
+    cursor: pointer;
+}
+
+.user-profile-form-avatar div img:hover,
+.user-profile-form-background div img:hover {
+    transform: translate3d(3px, -3px, 3px);
+    transition: 0.3s;
+}  
+
+.user-profile-form-avatar div span,
+.user-profile-form-background div span {
+    margin-right: 20px;
+    color: $def-color;
+    font-size: $def-font-size;
+}
+
+.user-profile-form-logout-button,
+.user-profile-form-submit-button {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.user-profile-form-logout-button {
+    margin-bottom: 20px;
+}
+
+.form div button:hover {
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.form div button:active {
+    transform: translateY(3px);
+}

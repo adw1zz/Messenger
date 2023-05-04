@@ -50,18 +50,4 @@ export default class AuthService {
         }
     }
 
-    static async validateToken() {
-        const options = {
-            method: 'GET',
-            credentials: 'include',
-        };
-        const response = await FetchInterceptor.request(`${this.#API_URL}/validate`, options);
-        if (response.status !== 200) {
-            return false
-        } else {
-            const body = await response.json();
-            return body;
-        }
-    }
-
 }

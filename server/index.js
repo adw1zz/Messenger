@@ -18,7 +18,6 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(cookieparser());
-app.use('/api/updateuser', formidableMiddleware());
 app.use('/api', router);
 app.use('/api', wsRouter);
 app.use(errorMiddleware);

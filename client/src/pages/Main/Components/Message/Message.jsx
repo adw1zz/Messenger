@@ -1,14 +1,21 @@
-import React, {useContext} from "react";
-import cl from './Message.module.css';
-import { AuthorizationContext } from "../../../../context/context";
+import React from "react";
+import DefaultAvatar from "../../../../assets/circle-user.png";
+import "../../../../styles/message.scss";
 
-const Message = ({message}) => {
-    const currUser = useContext(AuthorizationContext).userData;
+const Message = () => {
     return (
-        <div className={cl.message_block}>
-                <div className={currUser.id === message.from ? cl.to : cl.from}>
-                   {message.text}
+        <div className="message-block">
+            <div className="message">
+                <div>
+                    <img src={DefaultAvatar} />
                 </div>
+                <div>
+                    <span>Message Message</span>
+                </div>
+                <div>
+                    12:23
+                </div>
+            </div>
         </div>
     )
 }

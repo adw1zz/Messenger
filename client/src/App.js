@@ -10,15 +10,12 @@ import { useState } from 'react';
 function App() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
-  const [socket, setSocket] = useState({});
 
   return (
     <AuthorizationContext.Provider value={{
       nav: navigate,
       setUserData: setUserData,
       userData: userData,
-      setSocket: setSocket,
-      socket: socket
     }}>
       <Routes>
         <Route path="/" element={<Main />} />

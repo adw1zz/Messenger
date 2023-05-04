@@ -1,0 +1,31 @@
+@import "./consts.scss";
+
+.menubar {
+    padding: 1%;
+}
+
+.menubar-block {
+    width: 80%;
+    display: flex;
+    padding: 0.5%;
+    margin: 0 auto;
+    border-radius: $def-border-radius;
+    height: 'fit-content';
+    background: $def-block-background;
+    box-shadow: $def-box-shadow;
+    justify-content:space-between;
+}
+
+.menubar-block div {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.menubar-block div img {
+    cursor: pointer;
+}
+
+.menubar-block div img:hover {
+    transform: translate3d(3px, -3px, 3px);
+    transition: 0.3s;
+}
