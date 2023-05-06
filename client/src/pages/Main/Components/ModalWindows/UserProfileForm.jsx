@@ -5,7 +5,7 @@ import ChooseAvatar from "../../../../assets/mode-portrait.png";
 import ChooseBackground from "../../../../assets/mode-landscape.png";
 import AuthService from "../../../../services/auth-service";
 
-const UserProfileForm = () => {
+const UserProfileForm = ({setModalState}) => {
 
     const userData  = useContext(AuthorizationContext).userData;
     const redir = useContext(AuthorizationContext).nav;
@@ -14,7 +14,7 @@ const UserProfileForm = () => {
         e.stopPropagation();
         await AuthService.logout();
         redir('/login'); 
-    }
+    } 
 
     return (
         <form className="form">
@@ -22,7 +22,9 @@ const UserProfileForm = () => {
                 <input disabled={true} placeholder={userData.userTag}/>
             </div>
             <div className="user-nickname-input">
-                <input type="text" maxLength={8} defaultValue={userData.nickname}/>
+                <input type="text" maxLength={8} defaultValue={userData.nickname}
+                    required={true}
+                />
             </div>
             <div className="user-profile-form-avatar">
                 <div>

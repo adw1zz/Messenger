@@ -1,7 +1,7 @@
 const Router = require('express').Router;
 const router = new Router();
-const chatService = require("../controllers/chat-controller");
+const chatController = require("../controllers/chat-controller");
 
-router.ws('/chat', chatService.chating);
+router.ws('/chat', chatController.chating);
 
 module.exports = router;

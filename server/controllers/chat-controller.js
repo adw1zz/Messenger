@@ -1,4 +1,4 @@
-const chatService = require('../service/chat-service');
+const wsService = require('../service/ws-service');
 
 class ChatController {
 
@@ -6,23 +6,13 @@ class ChatController {
         ws.on('message', async (msg) => {
             msg = JSON.parse(msg);
             switch (msg.method) {
-                case 'connection': await chatService.getChat(ws, msg); break;
-                case "send-message": chatService.broadcasting(msg); break;
+                case 'connection': await wsService.connetion(ws, msg.data); break;
+                case 'send-message': wsService.broadcast(msg.data); break;
             }
         })
         ws.on('close', async (msg) => {
-            await chatService.closeChat();
+            console.log('close');
         })
-    }
-
-    async getChats(req, res, next) {
-        try {
-            const userId = req.query.userId;
-            const chats = await chatService.getUserChats(userId);
-            return res.json(chats);
-        } catch (e) {
-            next(e);
-        }
     }
 
 }

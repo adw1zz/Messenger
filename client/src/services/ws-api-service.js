@@ -1,29 +1,27 @@
 export default class WSService {
 
-    static setSocket(url, currUserId, chat) {
-        this.socket = new WebSocket(url);
-        this.chatData = {
-            currUsr: currUserId,
-            chatId: chat.chatId,
-            chatWith: chat.id
+    static #wsURL = 'ws:/localhost:5000/api/chat';
+
+    static setSocket(currentUserId, chat) {
+        const socket = new WebSocket(this.#wsURL);
+        const chatData = {
+            currentUser: currentUserId,
+            chatId: chat.id,
+            chatWith: chat.user.id,
         }
-        this.socket.onopen = () => {
-            this.socket.send(JSON.stringify({...this.chatData, method: 'connection'}));
+        socket.onopen = () => {
+            socket.send(JSON.stringify({ data: { ...chatData }, method: 'connection' }));
         }
+        return socket;
     }
 
-    static sendMessage(text, usr) {
+    static sendMessage(text, currentChatId, usr, socket) {
         const msg = {
+            chatId: currentChatId,
             from: usr.id,
-            nickname: usr.nickname,
             text: text,
             datetime: new Date(),
-            method: "send-message"
         }
-        this.socket.send(JSON.stringify(msg));
-    }
-
-    static closeConnection() {
-        
+        socket.send(JSON.stringify({ data: { ...msg }, method: 'send-message' }));
     }
 }

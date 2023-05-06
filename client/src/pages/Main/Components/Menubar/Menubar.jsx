@@ -1,19 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
 import "../../../../styles/menubar.scss";
 import DefaultAvatar from "../../../../assets/circle-user.png";
-import SearchIcon from "../../../../assets/add.png";
+import AddIcon from "../../../../assets/add.png";
 import ApiService from "../../../../services/http-api-service";
 import { useFetching } from "../../../../hooks/api-request";
 import { AuthorizationContext } from "../../../../context/context";
 import ModalWindow from "../ModalWindows/ModalWindow";
+import { useDispatch, useSelector } from "react-redux";
 
 const Menubar = () => {
 
     const [showModal, setShowModal] = useState(false);
     const [modalTitle, setModalTitle] = useState('');
     const [childForm, setChildForm] = useState(0);
+    const toFetch = useSelector(state => state.userData.toFetch);
     const redir = useContext(AuthorizationContext).nav;
     const setUser = useContext(AuthorizationContext).setUserData;
+    const dispatch = useDispatch();
 
     const [getUserData] = useFetching(async () => {
         const response = await ApiService.getUserData();
@@ -21,8 +24,15 @@ const Menubar = () => {
             redir('/login')
         } else {
             setUser(response.user);
+            dispatch({type: 'FETCH_QUEVE_UP'});
         }
     })
+
+    useEffect(() => {
+        if (toFetch === 1) {
+            getUserData();
+        }
+    },[toFetch])
 
     useEffect(() => {
         getUserData();
@@ -43,7 +53,8 @@ const Menubar = () => {
             <div className="menubar">
                 <div className="menubar-block">
                     <div>
-                        <img id={1} src={SearchIcon} 
+                        <img id={1} src={AddIcon} 
+                            onClick={onClickHandle}
                         />
                     </div>
                     <div>

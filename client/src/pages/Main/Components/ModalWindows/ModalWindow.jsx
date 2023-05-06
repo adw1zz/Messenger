@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import "../../../../styles/modal.scss";
 import UserProfileForm from "./UserProfileForm";
+import AddChatForm from "./AddChatForm";
 
 const ModalWindow = ({modalState, setModalState, modalTitle, Child}) => {
 
@@ -22,7 +23,8 @@ const ModalWindow = ({modalState, setModalState, modalTitle, Child}) => {
 
     const currentChildComponent = (id) => {
         switch (id) {
-            case "2": return <UserProfileForm showModal={setModalState}/>;
+            case "1": return <AddChatForm setModalState={setModalState}/>;
+            case "2": return <UserProfileForm setModalState={setModalState}/>;
         }
     }
 

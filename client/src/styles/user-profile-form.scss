@@ -5,11 +5,6 @@
     flex-direction: column;
 }
 
-.user-tag-input,
-.user-nickname-input {
-    margin-top: 20px;
-}
-
 .form div button {
     cursor: pointer;
     font-size: $def-font-size;
@@ -41,7 +36,6 @@
 
 .user-profile-form-avatar,
 .user-profile-form-background {
-    margin-top: 20px;
     display: flex;
     flex-direction: row;
     justify-content: center;

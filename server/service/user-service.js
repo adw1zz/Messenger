@@ -9,6 +9,7 @@ const ApiError = require('../exceptions/api-error');
 const OptionsDto = require('../dtos/options-dto');
 const userOptionsModel = require('../models/user-options-model');
 const fileService = require('./file-service');
+const chatService = require('./chat-service');
 
 class UserService {
     async registration(email, nickname, password) {
@@ -28,7 +29,7 @@ class UserService {
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
         await fileService.makeDirectory(userDto.id);
-        await userOptionsModel.create({user: userDto.id});
+        await userOptionsModel.create({ user: userDto.id });
     }
 
     async activate(activationLink) {
@@ -86,43 +87,22 @@ class UserService {
         }
     }
 
-    async searchUser(userTag) {
+    async addChat(userId, userTag) {
         const user = await userModel.findOne({ userTag: userTag });
         if (!user) {
-            throw ApiError.BadRequest(`User with userTag <${userTag}> not found`);
+            throw ApiError.BadRequest('not found')
         }
-        const userDto = new UserDto(user);
-        return { foundUser: {
-            id: userDto.id,
-            nickname: userDto.nickname,
-        } }
-    }
-
-    async getUsers(userIdArray) {
-        const users = await userModel.find({
-            '_id': {
-                $in: userIdArray
-            }
-        })
-        const foundUsers = users.map((user) => {
-            const userDto = new UserDto(user);
-            return {
-                id: userDto.id,
-                nickname: userDto.nickname
-            }
-        })
-        return foundUsers;
+        await chatService.createChat([userId, user.id]);
     }
 
     async updateUserOptions(avatar, background, nickname, userId) {
         const avatarDto = new FileDto(avatar, 'avatar');
         const backgroundDto = new FileDto(background, 'background');
-        const savedFiles = await fileService.saveFiles([{...avatarDto}, {...backgroundDto}], userId);
-        const userOptions = await userOptionsModel.findOne({user: userId});
-        userOptions.save({avatar: savedFiles.avatar, background: savedFiles.background});
-        
-    }
+        const savedFiles = await fileService.saveFiles([{ ...avatarDto }, { ...backgroundDto }], userId);
+        const userOptions = await userOptionsModel.findOne({ user: userId });
+        userOptions.save({ avatar: savedFiles.avatar, background: savedFiles.background });
 
+    }
 }
 
 module.exports = new UserService();

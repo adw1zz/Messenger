@@ -2,34 +2,39 @@
 
 .message-block {
     margin-top: 20px;
-    width: 50%;
+    width: 100%;
     display: flex;
-    justify-content: flex-start;
 }
 
-.message {
+.message-to {
     width: 100%;
     padding: 1%;
     height: fit-content;
     display: flex;
     align-items: center;
     flex-direction: row;
+    justify-content: flex-end;
 }
 
-.message div:nth-child(2) {
+.message-from {
+    width: 100%;
+    padding: 1%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.message-text {
     padding: 1%;
     width: fit-content;
     font-size: $def-font-size;
     background: $def-input-background;
     border-radius: $def-border-radius;
-    margin-left: 20px;
-}
-
-.message div:nth-child(3) {
     color: $def-color;
-    margin-left: 10px;
 }
 
-.message div:nth-child(2) span {
+.message-text span {
     color: $def-color;
 }

@@ -1,83 +1,52 @@
 const chatModel = require('../models/chat-model');
-const messageService = require('./message-service');
-const userService = require('./user-service');
 const ChatDto = require('../dtos/chat-dto');
-const aWss = require('../index').getWss();
+const userModel = require('../models/user-model');
+const UserDto = require('../dtos/user-dto');
 
 class ChatService {
 
-    currSessionMessages = [];
-
-    async getChat(ws, msg) {
-        ws.id = msg.currUsr;
-        let chat = await chatModel.findById(msg.chatId);
-        if (!chat) {
-            const usrs = [msg.currUsr, msg.chatWith];
-            chat = await chatModel.create({ users: usrs, chatname: '', messages: [] });
-        }
-        const chatDto = new ChatDto(chat);
-        this.chatDto = chatDto;
-        this.currSessionMessages = [];
-        const messages = await messageService.getChatMessages(this.chatDto.messages);
-        ws.send(JSON.stringify(messages));
+    async createChat(users) {
+        const chat = await chatModel.create({chatname: '', users: users, messages: []});
+        return chat;
     }
 
-    broadcasting(message) {
-        this.currSessionMessages.push(message);
-        aWss.clients.forEach((client) => {
-            if (this.chatDto.users.includes(client.id)) {
-                client.send(JSON.stringify(message));
-            }
-        })
-    }
-
-    async closeChat() {
-        let clientsCount = 0;
-        aWss.clients.forEach((client) => {
-            if (this.chatDto.users.includes(client.id)) {
-                clientsCount++;
-            }
-        })
-        if (clientsCount === 0) {
-            const createdMsgArray = await messageService.saveMessages(this.currSessionMessages);
-            const newArray = this.chatDto.messages.concat(createdMsgArray);
-            const chat = await chatModel.findById(this.chatDto.id);
-            chat.messages = newArray;
-            await chat.save();
-            this.currSessionMessages = [];
-            this.chatDto = {};
-        }
-    }
-
-    async getUserChats(userId) {
+    async getChats(userId) {
         const chats = await chatModel.find({
-            users:
-            {
+            users: {
                 $all: [
                     userId
                 ]
             }
-        })
-        const chatsUsers = chats.map((chat) => {
+        });
+        const chatDtos = chats.map((chat) => {
             const chatDto = new ChatDto(chat);
             return {
-                chatId: chatDto.id,
-                users: chatDto.users
+                id: chatDto.id,
+                userIds: chatDto.users,
             }
         })
-        const neededUsers = chatsUsers.map((chat) => {
-            if (chat.users[0] != userId) {
-                return chat.users[0];
+        const neededUsers = chatDtos.map((chat) => {
+            if (chat.userIds[0] != userId) {
+                return chat.userIds[0];
             } else {
-                return chat.users[1];
+                return chat.userIds[1];
             }
         })
-        const foundChats = await userService.getUsers(neededUsers);
+        const users = await userModel.find({
+            '_id': {$in: neededUsers}
+        }); 
+        const userDtos = users.map((user) => {
+            const userDto = new UserDto(user);
+            return {
+                nickname: userDto.nickname,
+                id: userDto.id,
+            }
+        })
         const result = [];
-        for (let i = 0; i < foundChats.length; i++) {
+        for(let i=0; i<chatDtos.length; i++) {
             result.push({
-                ...foundChats[i],
-                chatId: chatsUsers[i].chatId,
+                user: {...userDtos[i]},
+                id: chatDtos[i].id
             })
         }
         return result;

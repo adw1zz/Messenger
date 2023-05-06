@@ -15,9 +15,8 @@ router.post('/login', userController.login);
 router.post('/logout', userController.logout);
 router.get('/activate/:link', userController.activate);
 router.get('/refresh', userController.refresh);
-router.get('/searchuser', authMiddleware, userController.searchUser);
 router.get('/user', authMiddleware, userController.getUserData);
-router.get('/chats', chatController.getChats);
-router.put('/updateuser', authMiddleware, userController.updateUserOptions);
+router.post('/add_chat', authMiddleware, userController.addChat);
+router.get('/chats', authMiddleware, userController.getChats);
 
 module.exports = router;
