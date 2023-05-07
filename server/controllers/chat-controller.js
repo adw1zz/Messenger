@@ -8,10 +8,15 @@ class ChatController {
             switch (msg.method) {
                 case 'connection': await wsService.connetion(ws, msg.data); break;
                 case 'send-message': wsService.broadcast(msg.data); break;
+                case 'get-messages': wsService.getMessages(ws, msg.data); break;
+                case 'delete-chat': wsService.deleteChat(msg.data); break;
             }
         })
         ws.on('close', async (msg) => {
-            console.log('close');
+            await wsService.closeWs(ws);
+        })
+        ws.on('error', (err) => {
+            console.log(err);
         })
     }
 

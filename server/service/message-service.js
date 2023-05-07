@@ -3,6 +3,14 @@ const MsgDto = require('../dtos/msg-dto');
 
 class MessageService {
 
+    async deleteMessages(messagesIds) {
+        await messageModel.deleteMany({
+            _id: {
+                $in: messagesIds
+            }
+        })
+    }
+
     async saveMessages(messages) {
         const msgArray = await messageModel.create(messages);
         const msgArrayIds = msgArray.map((msg) => {

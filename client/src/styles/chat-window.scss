@@ -17,7 +17,16 @@
     margin: 0 auto;
     border-radius: $def-border-radius;
     background: $def-input-background;
+    display: flex;
+    align-items: center;
+    justify-content:flex-start;
     height: 40px;
+}
+
+.chat-window-panel div {
+    font-size: $def-font-size;
+    color: $def-color;
+    margin-left: 40%;
 }
 
 .chat-window-dialog {
@@ -33,7 +42,7 @@
     margin: 0 auto;
 }
 
-.chat-window-input input {
+.chat-window-input textarea {
     border: 0;
     color: $def-color;
     width: 100%;
@@ -45,4 +54,5 @@
     padding-right: 10px;
     font-size: $def-font-size;
     outline: none;
+    resize: none;
 }

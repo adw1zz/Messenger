@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DefaultAvatar from "../../../../assets/circle-user.png";
 import "../../../../styles/message.scss";
 import { AuthorizationContext } from "../../../../context/context";
@@ -6,6 +6,13 @@ import { AuthorizationContext } from "../../../../context/context";
 const Message = ({message}) => {
 
     const userData = useContext(AuthorizationContext).userData;
+    const [date, setDate] = useState('');
+
+    useEffect(() => {
+        const dateObj = new Date(message.datetime);
+        const ddMmYy = dateObj.toLocaleDateString();
+        setDate(ddMmYy);
+    },[])
 
     return (
         <div className="message-block">
@@ -14,7 +21,7 @@ const Message = ({message}) => {
                     <span>{message.text}</span>
                 </div>
                 <div>
-                    {}
+                    {date}
                 </div>
             </div>
         </div>

@@ -18,5 +18,6 @@ router.get('/refresh', userController.refresh);
 router.get('/user', authMiddleware, userController.getUserData);
 router.post('/add_chat', authMiddleware, userController.addChat);
 router.get('/chats', authMiddleware, userController.getChats);
+router.post('/update_user', authMiddleware, userController.updateUser);
 
 module.exports = router;

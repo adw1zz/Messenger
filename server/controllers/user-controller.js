@@ -92,11 +92,12 @@ class UserController {
         }
     }
 
-    async updateUserOptions(req, res, next) {
+    async updateUser(req, res, next) {
         try {
-            const { background, avatar } = req.files;
-            const { nickname } = req.fields;
-            const userId = req.user.id;
+            const { id } = req.user;
+            const { nickname } = req.body;
+            const userData = await userService.updateUser(id, nickname);
+            return res.json(userData);
         } catch (e) {
             next(e);
         }

@@ -43,4 +43,20 @@ export default class ApiService {
             return await response.json();
         }
     }
+
+    static async updateUser(formValue) {
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                nickname: formValue
+            })
+        }
+        const response = await FetchInterceptor.request(`${this.#API_URL}/update_user`, options);
+        if (response.status === 401) {
+            return false
+        } else {
+            return await response.json();
+        }
+    }
 }

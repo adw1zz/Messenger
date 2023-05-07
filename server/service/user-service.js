@@ -28,8 +28,8 @@ class UserService {
         const tokens = tokenService.generateTokens({ ...userDto });
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
-        await fileService.makeDirectory(userDto.id);
-        await userOptionsModel.create({ user: userDto.id });
+        //await fileService.makeDirectory(userDto.id);
+        //await userOptionsModel.create({ user: userDto.id });
     }
 
     async activate(activationLink) {
@@ -95,14 +95,14 @@ class UserService {
         await chatService.createChat([userId, user.id]);
     }
 
-    async updateUserOptions(avatar, background, nickname, userId) {
-        const avatarDto = new FileDto(avatar, 'avatar');
-        const backgroundDto = new FileDto(background, 'background');
-        const savedFiles = await fileService.saveFiles([{ ...avatarDto }, { ...backgroundDto }], userId);
-        const userOptions = await userOptionsModel.findOne({ user: userId });
-        userOptions.save({ avatar: savedFiles.avatar, background: savedFiles.background });
-
+    async updateUser(userId, nickname) {
+        const user = await userModel.findById(userId);
+        user.nickname = nickname;
+        const newUser = await user.save()
+        const userDto = new UserDto(newUser);
+        return { user: userDto }
     }
+
 }
 
 module.exports = new UserService();
