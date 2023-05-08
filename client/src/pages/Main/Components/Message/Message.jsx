@@ -11,7 +11,7 @@ const Message = ({message}) => {
     useEffect(() => {
         const dateObj = new Date(message.datetime);
         const ddMmYy = dateObj.toLocaleDateString();
-        setDate(ddMmYy);
+        setDate(`${ddMmYy} ${dateObj.getHours()}:${dateObj.getMinutes()}`);
     },[])
 
     return (

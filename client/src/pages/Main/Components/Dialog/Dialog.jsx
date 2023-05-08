@@ -45,6 +45,12 @@ const Dialog = () => {
     useEffect(()=> {
         const msgArrContainer = document.getElementById('dialog_id');
         msgArrContainer.scrollTop = msgArrContainer.scrollHeight;
+        if (messages.length < 5) {
+            console.log('asd');
+            msgArrContainer.style.justifyContent = 'flex-end';
+        } else {
+            msgArrContainer.style.justifyContent = null;
+        }   
     },[messages])
 
     return (
